@@ -1,0 +1,49 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+import Prose from "../components/Prose.astro";
+
+const { frontmatter } = Astro.props;
+---
+
+<BaseLayout pageTitle={frontmatter.title}>
+    <main class="p-5 h-fit">
+        <section
+            class="card bg-base-100 shadow-xl p-5 mx-10 my-5 border border-tertiary"
+        >
+            <div class="card-body">
+                <h2 class="card-title">{frontmatter.title}</h2>
+                <h3>
+                    written by {frontmatter.author} on {
+                        frontmatter.pubDate.toString().slice(0, 10)
+                    }
+                </h3>
+                <h3>{frontmatter.description}</h3>
+                <h3>
+                    tags:
+                    {
+                        frontmatter.tags.map((tag) => (
+                            <a
+                                href={`/tags/${tag}`}
+                                class="badge badge-secondary mx-1"
+                            >
+                                {tag}
+                            </a>
+                        ))
+                    }
+                </h3>
+            </div>
+        </section>
+        <section
+            class="card bg-base-100 shadow-xl p-5 mx-10 my-5 border border-tertiary"
+        >
+            <div class="card-body">
+                <Prose>
+                    <slot />
+                </Prose>
+            </div>
+        </section>
+        <section class="mx-10 mt-5">
+            <a href="/blog/" class="btn btn-block">back to blog page</a>
+        </section>
+    </main>
+</BaseLayout>

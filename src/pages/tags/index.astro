@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro"
+
+const allPosts = await Astro.glob('../posts/*.md');
+const tags = [...new Set(allPosts.flatMap(post => post.frontmatter.tags).flat())]
+const pageTitle = "Search by Tag"
+---
+<BaseLayout pageTitle={pageTitle}>
+    <main class="h-fit p-5">
+        <section class="card bg-base-100 shadow-xl p-5 mx-10 my-5 border border-tertiary">
+			<div class="card-body">
+				<h2 class="card-title">search blog posts by tag:</h2>
+                <ul>
+                    {tags.map(tag => (
+                        <li class="inline">
+                            <a class="btn btn-primary m-1" href={`/tags/${tag}`}>{tag}</a>
+                        </li>
+                    ))}
+                </ul>
+			</div>
+		</section>
+    </main>
+</BaseLayout>

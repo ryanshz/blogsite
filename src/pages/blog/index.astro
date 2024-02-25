@@ -1,0 +1,56 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+
+const allPosts = await Astro.glob("../posts/*md");
+const pageTitle = "blog";
+---
+
+<BaseLayout pageTitle={pageTitle}>
+	<main class="h-fit p-5">
+		<section class="card shadow-xl mx-10 border border-tertiary">
+			<div class="card-body">
+				<h2 class="card-title">{pageTitle}</h2>
+				<p class="text-lg">where i post about astro stuff</p>
+				<a href="/tags/" class="btn">nav by tag if you want</a>
+			</div>
+		</section>
+		<section
+			class="card lg:card-side shadow-xl p-5 my-5 mx-10 border border-tertiary flex flex-wrap justify-between gap-12"
+		>
+			{
+				allPosts.slice(0, 8).map((post) => (
+					<a href={post.url}>
+						<section class="card w-96 h-96 shadow-xl">
+							<figure>
+								<Image
+									width="1920"
+									height="1080"
+									loading="eager"
+									src={post.frontmatter.image.url}
+									alt={post.frontmatter.image.alt}
+								/>
+							</figure>
+							<div class="card-body">
+								<h2 class="card-title">
+									{post.frontmatter.title}
+								</h2>
+								<p>{post.frontmatter.description}</p>
+								<div class="card-actions justify-end">
+									{post.frontmatter.tags.map((tag) => (
+										<div class="badge badge-outline">
+											{tag}
+										</div>
+									))}
+								</div>
+							</div>
+						</section>
+					</a>
+				))
+			}
+		</section>
+		<section class="mx-10 mt-5">
+			<a href="/blog/all" class="btn btn-block">more posts</a>
+		</section>
+	</main>
+</BaseLayout>

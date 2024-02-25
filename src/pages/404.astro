@@ -1,0 +1,28 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+import error from "../images/frieren-error.png";
+
+const pageTitle = "ryanshz";
+---
+
+<BaseLayout pageTitle={pageTitle}>
+    <main class="h-fit flex justify-center items-center p-5">
+        <section class="card w-96 bg-base-100 shadow-xl border border-tertiary">
+            <figure class="px-10 pt-10">
+                <Image
+                    width="500"
+                    src={error}
+                    alt="error image"
+                    class="rounded-xl"
+                />
+            </figure>
+            <div class="card-body items-center text-center">
+                <h2 class="card-title">congrats! you broke it!</h2>
+                <div class="card-actions mt-5">
+                    <a href="/" class="btn btn-primary">back to home</a>
+                </div>
+            </div>
+        </section>
+    </main>
+</BaseLayout>

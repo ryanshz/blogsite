@@ -1,0 +1,71 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { Image } from "astro:assets";
+import guts from "../images/guts.png";
+
+const pageTitle = "about";
+
+const me = {
+	firstName: "ryan",
+	country: "US",
+	occupation: "student",
+	hobbies: ["software dev", "bodybuilding", "writing", "gaming"],
+};
+
+const skills = ["html", "css", "js", "astro"];
+
+const happy = true;
+const finished = true;
+const goal = 3;
+---
+
+<BaseLayout pageTitle={pageTitle}>
+	<main class="h-fit p-5">
+		<section
+			class="card lg:card-side shadow-xl mx-10 my-5 border border-tertiary"
+		>
+			<figure>
+				<Image width="400" src={guts} alt="guts berserk" loading="eager" />
+			</figure>
+			<div class="card-body">
+				<section>
+					<h2 class="card-title">{pageTitle}</h2>
+					<p>my name is {me.firstName}</p>
+					<p>{me.country} based, currently a {me.occupation}</p>
+					{
+						me.hobbies.length >= 2 && (
+							<p>
+								i mess with {me.hobbies[0]} and {me.hobbies[1]}{" "}
+								in my free time
+							</p>
+						)
+					}
+					<p>i also post blog stuff apparently now too idk</p>
+				</section>
+			</div>
+		</section>
+		<section
+			class="card lg:card-side shadow-xl mx-10 my-5 border border-tertiary"
+		>
+			<div class="card-body">
+				<section>
+					<h2 class="card-title">skills</h2>
+					<p>proficient in a few things, namely:</p>
+					<ul class="list-disc mx-5 my-1">
+						{skills.map((skill) => <li>{skill}</li>)}
+					</ul>
+					<h2 class="card-title">extra (astro tutorial)</h2>
+					{happy && <p>I am happy to be learning Astro!</p>}
+					{finished && <p>I finished this tutorial!</p>}
+					{
+						goal === 3 ? (
+							<p>My goal is to finish in 3 days.</p>
+						) : (
+							<p>My goal is not 3 days.</p>
+						)
+					}
+				</section>
+			</div>
+		</section>
+	</main>
+</BaseLayout>

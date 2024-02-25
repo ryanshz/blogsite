@@ -1,0 +1,112 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Greeting from "../components/Greeting";
+import { Image } from "astro:assets";
+import guts from "../images/guts.png";
+
+const me = {
+	firstName: "ryan",
+	country: "US",
+	occupation: "student",
+	hobbies: ["software dev", "bodybuilding", "writing", "gaming"],
+};
+
+const allPosts = await Astro.glob("../pages/posts/*.md");
+
+const pageTitle = "ryanshz blog";
+---
+
+<BaseLayout pageTitle={pageTitle}>
+	<main class="h-fit p-5">
+		<section class="card shadow-xl p-5 mx-10 my-5 border border-tertiary">
+			<div class="card-body">
+				<h2 class="card-title">welcome to blog page</h2>
+				<Greeting client:load messages={["yo", "hey", "ok", "sup"]} />
+			</div>
+		</section>
+		<section class="flex">
+			<section
+				class="card shadow-xl p-5 mx-10 my-5 border border-tertiary grow"
+			>
+				<div class="card-body">
+					<h2 class="card-title mx-10">about</h2>
+					<a href="/about/">
+						<section
+							class="card shadow-xl mx-10 my-5 border border-tertiary"
+						>
+							<figure>
+								<Image
+									src={guts}
+									alt="guts berserk"
+									loading="eager"
+								/>
+							</figure>
+							<div class="card-body">
+								<section class="space-y-2">
+									<h2 class="card-title">{pageTitle}</h2>
+									<p>my name is {me.firstName}</p>
+									<p>
+										{me.country} based, currently a {
+											me.occupation
+										}
+									</p>
+									{
+										me.hobbies.length >= 2 && (
+											<p>
+												i mess with {me.hobbies[0]} and{" "}
+												{me.hobbies[1]} in my free time
+											</p>
+										)
+									}
+									<p>
+										i also post blog stuff apparently now
+										too idk
+									</p>
+								</section>
+							</div>
+						</section>
+					</a>
+				</div>
+			</section>
+			<section
+				class="card lg:card-side shadow-xl p-5 mx-10 my-5 border border-tertiary grow"
+			>
+				<div class="card-body">
+					<h2 class="card-title mx-10 mb-5">blog</h2>
+					<section
+						class="card shadow-xl mx-10 border border-tertiary"
+					>
+						<div class="card-body">
+							<p class="text-lg">
+								where i post about astro stuff
+							</p>
+						</div>
+					</section>
+					<section
+						class="card lg:card-side shadow-xl p-5 my-5 mx-10 border border-tertiary flex flex-wrap justify-evenly gap-12"
+					>
+						{
+							allPosts.slice(0, 4).map((post) => (
+								<a href={post.url}>
+									<section class="card w-96 shadow-xl">
+										<div class="card-body">
+											<h2 class="card-title">
+												{post.frontmatter.title}
+											</h2>
+											<p>
+												{post.frontmatter.description}
+											</p>
+										</div>
+									</section>
+								</a>
+							))
+						}
+					</section>
+					<section class="mx-10 mt-5">
+						<a href="/blog/" class="btn btn-block">see posts</a>
+					</section>
+				</div>
+			</section>
+		</section>
+	</main>
+</BaseLayout>
